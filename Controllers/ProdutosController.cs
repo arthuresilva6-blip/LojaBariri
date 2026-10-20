@@ -10,7 +10,7 @@ namespace TechStoreMVC.Controllers
     {
         // GET: ProdutosController
 
-        // Passo 02 - Criar a açãp
+        // Passo 02 - Criar a açãp  
         // Uma view depende de uma ação e vice-versa
         public ActionResult Index()
         {
