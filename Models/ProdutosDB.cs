@@ -24,7 +24,7 @@ public class ProdutosDB
             produto => produto.Id == Id
         );
     }
-    public void Adicionor(Produto produto)
+    public void Adicionar(Produto produto)
     {
         produto.Id = produtos.Count + 1;
         produtos.Add(produto);

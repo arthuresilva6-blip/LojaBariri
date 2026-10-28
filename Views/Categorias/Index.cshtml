@@ -32,8 +32,20 @@
                 <td>@categoria.Descricao</td>
                 <td>@categoria.Ativa</td>
                 <td>
-                    <button class="btn btn-primary">Detalhes</button>
-                </td>
+                        <a asp-action="Details" asp-route-id="@categoria.Id" class="btn btn-primary btn-sm">
+                            Detalhes
+                        </a>
+
+                        <a asp-action="Edit" asp-route-id="@categoria.Id" class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@categoria.Id" class="btn btn-danger btn-sm">
+                            Excluir
+                        </a>
+                        <!-- Os botões serão adicionados
+                             nas próximas etapas. -->
+                    </td>
             </tr>
         }
     </tbody>

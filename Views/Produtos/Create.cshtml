@@ -1,42 +1,59 @@
-@*Passo 03 - Criar as Views*@
-@*Se Estou na View(Index) de Produtos, qual será a model
-que eu devo Usar??????????*@
 @model TechStoreMVC.Models.Produto
 
 @{
-    ViewData["Title"] = "Excluir produto";
+    ViewData["Title"] = "Cadastrar produto";
 }
 
-<h1>Excluir produto</h1>
+<h1>Cadastrar produto</h1>
 
-<div class="alert alert-warning">
-    Tem certeza de que deseja excluir
-    este produto?
-</div>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
 
-<dl class="row">
-    <dt class="col-sm-2">Nome</dt>
-    <dd class="col-sm-10">@Model.Nome</dd>
+    <div class="mb-3">
+        <label asp-for="Nome"
+               class="form-label"></label>
 
-    <dt class="col-sm-2">Preço</dt>
-    <dd class="col-sm-10">
-        @Model.Preco.ToString("C")
-    </dd>
+        <input asp-for="Nome"
+               class="form-control" />
 
-    <dt class="col-sm-2">Estoque</dt>
-    <dd class="col-sm-10">@Model.Estoque</dd>
-</dl>
+        <span asp-validation-for="Nome"
+              class="text-danger"></span>
+    </div>
 
-<form asp-action="Delete" method="post">
-    <input asp-for="Id" type="hidden" />
+    <div class="mb-3">
+        <label asp-for="Preco"
+               class="form-label"></label>
+
+        <input asp-for="Preco"
+               class="form-control" />
+
+        <span asp-validation-for="Preco"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Estoque"
+               class="form-label"></label>
+
+        <input asp-for="Estoque"
+               class="form-control" />
+
+        <span asp-validation-for="Estoque"
+              class="text-danger"></span>
+    </div>
 
     <button type="submit"
-            class="btn btn-danger">
-        Confirmar exclusão
+            class="btn btn-success">
+        Cadastrar
     </button>
 
     <a asp-action="Index"
        class="btn btn-secondary">
-        Cancelar
+        Voltar
     </a>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

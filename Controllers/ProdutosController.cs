@@ -1,37 +1,36 @@
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using TechStoreMVC.Models;
 
 namespace TechStoreMVC.Controllers
 {
     public class ProdutosController : Controller // o ":" significa herança
-    //Herança = herança as caracteristicas de um Controller. :)
-    //Conceito de POO -> Programação Orientada a Objetos
+    // Herança = herda as caracteristicas de um Controller. :)
+    // Conceito de POO -> Programação Orientada a Objetos
     {
         private readonly ProdutosDB _produtosDB;
         public ProdutosController()
         {
             _produtosDB = new ProdutosDB();
         }
-
-
-        // Passo 02 - Criar a açãp  
-        // Uma view depende de uma ação e vice-versa
-        [HttpGet]
+        // Passo 02 - Criar a ação
+        // Uma view Depende de uma ação e vice-versa
+        [HttpGet] // Verbo Http -> para ter os produtos
         public ActionResult Index()
         {
             List<Produto> produtos = _produtosDB.Listar();
             return View(produtos);
-
         }
+
         [HttpGet]
         public IActionResult Details(int id)
         {
             Produto? produto = _produtosDB.buscarPorId(id);
             if (produto is null)
                 return NotFound();
-            return View(produto);
+
+                return View(produto);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -42,22 +41,25 @@ namespace TechStoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Produto produto)
         {
-            if (ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return View(produto);
 
-            _produtosDB.Adicionor(produto);
-            TempData["Sucesso"] =
+            _produtosDB.Adicionar(produto);
+            TempData["Sucesso"] = 
                 "Produto cadastrado com sucesso!";
+
             return RedirectToAction(nameof(Index));
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
             Produto? produto = _produtosDB.buscarPorId(id);
-            if (produto is null)
+             if (produto is null)
                 return NotFound();
             return View(produto);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Produto produto, int id)
@@ -65,36 +67,38 @@ namespace TechStoreMVC.Controllers
             if (id != produto.Id)
                 return BadRequest();
 
-            if (ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return View(produto);
-            
-            bool atualizou = _produtosDB.Atualizar(produto);
 
-            TempData["Sucesso"] =
+            bool atualizou = _produtosDB.Atualizar(produto);    
+            if(!atualizou)
+                return NotFound();
+                    
+            TempData["Sucesso"] = 
                 "Produto atualizado com sucesso!";
+
             return RedirectToAction(nameof(Index));
         }
-
+    
         [HttpGet]
         public IActionResult Delete(int id)
         {
             Produto? produto = _produtosDB.buscarPorId(id);
-            if (produto is null)
+             if (produto is null)
                 return NotFound();
             return View(produto);
         }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Produto produto, int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-           
-            
-            bool excluir = _produtosDB.Excluir(id);
-            if(!excluir)
+            bool excluiu = _produtosDB.Excluir(id);   
+            if(!excluiu)
                 return NotFound();
-
-            TempData["Sucesso"] =
-                "Produto atualizado com sucesso!";
+                    
+            TempData["Sucesso"] = 
+                "Produto excluído com sucesso!";
 
             return RedirectToAction(nameof(Index));
         }
